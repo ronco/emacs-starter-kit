@@ -1,7 +1,55 @@
+;; tramp
 (setq tramp-default-method "ssh")
+;; colors
 (color-theme-blackboard)
+;; org
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(setq org-log-done t)
+
+;; tabs
+(setq default-tab-width 4)
+
+;; This is perl related stuff
+(setq cperl-indent-level 4)
+
+(defun perltidy-region ()
+    "Run perltidy on the current region."
+    (interactive)
+    (save-excursion
+      (shell-command-on-region (point) (mark) "perltidy -t -nola -q" nil t)))
+  (defun perltidy-defun ()
+    "Run perltidy on the current defun."
+    (interactive)
+    (save-excursion (mark-defun)
+					(perltidy-region)))
+
+;; full-ack stuff
+;; (add-to-list 'load-path "/path/to/full-ack")
+(autoload 'ack-same "full-ack" nil t)
+(autoload 'ack "full-ack" nil t)
+(autoload 'ack-find-same-file "full-ack" nil t)
+(autoload 'ack-find-file "full-ack" nil t)
+
+
+;; GLOBAL BINDINGS
+
+(fset 'triple-screen
+   "\C-x1\C-x3\C-x3\C-x+")
+(global-set-key "\M-3"     'triple-screen)
+
+;; org
+(defun org-summary-todo (n-done n-not-done)
+       "Switch entry to DONE when all subentries are done, to TODO otherwise."
+       (let (org-log-done org-log-states)   ; turn off logging
+         (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+     
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
+
+;; buffer window toggling
+(global-set-key "\C-x\C-b" 'bs-show)
+(global-set-key "\C-\M-j"  'bs-cycle-next)
+(global-set-key "\M-j"     'bs-cycle-previous)
+(global-set-key "\M-o"     'other-window)
