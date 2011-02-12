@@ -8,28 +8,35 @@
 (setq org-log-done t)
 
 ;; tabs
-(setq default-tab-width 4)
+(defun 4x4-tabs ()
+  "Setting to use tabs at a width of 4"
+  (setq indent-tabs-mode t)
+  (setq tab-width 4))
 
 ;; This is perl related stuff
-(setq cperl-indent-level 4)
 
 (defun perltidy-region ()
-    "Run perltidy on the current region."
-    (interactive)
-    (save-excursion
-      (shell-command-on-region (point) (mark) "perltidy -t -nola -q" nil t)))
+  "Run perltidy on the current region."
+  (interactive)
+  (save-excursion
+	(shell-command-on-region (point) (mark) "perltidy -t -nola -q" nil t)))
   (defun perltidy-defun ()
     "Run perltidy on the current defun."
     (interactive)
     (save-excursion (mark-defun)
-					(perltidy-region)))
+                    (perltidy-region)))
 
-;; full-ack stuff
-;; (add-to-list 'load-path "/path/to/full-ack")
-(autoload 'ack-same "full-ack" nil t)
-(autoload 'ack "full-ack" nil t)
-(autoload 'ack-find-same-file "full-ack" nil t)
-(autoload 'ack-find-file "full-ack" nil t)
+(defun ron-perl-hook ()
+  "My perl settings"
+  (4x4-tabs)
+  (setq cperl-indent-level 4)
+  )
+
+
+(add-hook 'cperl-mode-hook 'ron-perl-hook)
+
+;; lisp stuff
+
 
 
 ;; GLOBAL BINDINGS
