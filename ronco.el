@@ -44,6 +44,9 @@
 (fset 'triple-screen
    "\C-x1\C-x3\C-x3\C-x+")
 (global-set-key "\M-3"     'triple-screen)
+(fset 'twin-screen
+   "\C-x1\C-x3\C-x+")
+(global-set-key "\M-2"     'twin-screen)
 
 ;; org
 (defun org-summary-todo (n-done n-not-done)
