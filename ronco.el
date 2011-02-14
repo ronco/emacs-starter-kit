@@ -18,18 +18,24 @@
 (defun perltidy-region ()
   "Run perltidy on the current region."
   (interactive)
-  (save-excursion
-	(shell-command-on-region (point) (mark) "perltidy -t -nola -q" nil t)))
-  (defun perltidy-defun ()
-    "Run perltidy on the current defun."
-    (interactive)
-    (save-excursion (mark-defun)
-                    (perltidy-region)))
+  (if (use-region-p)
+      (save-excursion
+	(shell-command-on-region (point) (mark) "perltidy -t -nola -q" nil t))
+      (save-excursion (mark-whole-buffer) (perltidy-region))
+    )
+  )
+(defun perltidy-defun ()
+  "Run perltidy on the current defun."
+  (interactive)
+  (save-excursion (mark-defun)
+        (perltidy-region)))
 
 (defun ron-perl-hook ()
   "My perl settings"
   (4x4-tabs)
   (setq cperl-indent-level 4)
+  (define-key cperl-mode-map [f5] 'perltidy-defun)
+  (define-key cperl-mode-map [f6] 'perltidy-region)
   )
 
 
