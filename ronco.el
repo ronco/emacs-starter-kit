@@ -1,7 +1,9 @@
 ;; tramp
 (setq tramp-default-method "ssh")
 ;; colors
-(color-theme-blackboard)
+(require 'color-theme)
+(if window-system
+    (color-theme-blackboard))
 ;; org
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
