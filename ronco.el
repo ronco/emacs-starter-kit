@@ -53,8 +53,15 @@
 (fset 'twin-screen
    "\C-x1\C-x3\C-x+")
 (global-set-key "\M-2"     'twin-screen)
+(global-set-key "\C-c/"     'comment-or-uncomment-region)
 
-;; org
+;; ;; org
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-directory "~/org")
+(setq org-agenda-files (list (concat org-directory "/work.org")
+                             (concat org-directory "/home.org")
+                             (concat org-directory "/auth_release.org")))
+(setq org-default-notes-file (concat org-directory "/notes.org"))
 (defun org-summary-todo (n-done n-not-done)
        "Switch entry to DONE when all subentries are done, to TODO otherwise."
        (let (org-log-done org-log-states)   ; turn off logging
@@ -63,6 +70,7 @@
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cc" 'org-capture)
 
 ;; buffer window toggling
 (global-set-key "\C-x\C-b" 'bs-show)
