@@ -4,10 +4,6 @@
 (require 'color-theme)
 (if window-system
     (color-theme-blackboard))
-;; org
-(require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(setq org-log-done t)
 
 ;; tabs
 (defun 4x4-tabs ()
@@ -57,19 +53,25 @@
 (global-set-key "\M-2"     'twin-screen)
 (global-set-key "\C-c/"     'comment-or-uncomment-region)
 
-;; ;; org
+;; org
+(setq org-enforce-todo-dependencies t)
+(setq org-enforce-todo-checkbox-dependencies t)
+(setq org-clock-idle-time 10)
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(setq org-log-done t)
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 (setq org-directory "~/org")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
 (setq org-agenda-files (list (concat org-directory "/work.org")
                              (concat org-directory "/home.org")
-                             (concat org-directory "/auth_release.org")))
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(defun org-summary-todo (n-done n-not-done)
-       "Switch entry to DONE when all subentries are done, to TODO otherwise."
-       (let (org-log-done org-log-states)   ; turn off logging
-         (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
-     
-(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+                             (concat org-directory "/auth_release.org")
+                             org-default-notes-file))
+
+(setq org-todo-keywords
+      '((sequence "TODO" "|" "DONE")
+        (sequence "NEW" "IN PROGRESS" "|" "FIXED" "DECLINED")
+        (sequence "|" "CANCELED")))
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-cc" 'org-capture)
