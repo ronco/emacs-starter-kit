@@ -56,7 +56,7 @@
 ;; org
 (setq org-enforce-todo-dependencies t)
 (setq org-enforce-todo-checkbox-dependencies t)
-(setq org-clock-idle-time 10)
+(setq org-clock-idle-time 5)
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (setq org-log-done t)
