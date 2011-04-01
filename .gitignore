@@ -22,3 +22,6 @@ tramp
 \#*
 history
 *~
+/.org-id-locations
+/rwhite
+/web-vcs-log.org
