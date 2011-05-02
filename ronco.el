@@ -55,6 +55,8 @@
 (setq auto-mode-alist (append '(("\\.tt$" . tt-html-mumamo)) auto-mode-alist))
 (defun ron-tt-html-mumamo-hook
   (local-set-key (kbd "M-TAB") 'nxml-complete)
+  (local-set-key (kbd "C-ci") 'indent-region)
+  (local-set-key (kbd "C-cC-i") 'indent-buffer)
   )
 
 (add-hook 'tt-html-mumamo-mode 'ron-tt-html-mumamo-hook)
@@ -69,8 +71,19 @@
 
 (add-hook 'objc-mode-hook 'ron-objc-hook)
 
+
 ;; lisp stuff
 
+; function for label2fieldlabelrender
+(defun label-markup (start end)
+  ""
+  (interactive "r")
+  (save-excursion
+    (goto-char end)
+    (insert "' | label2fieldlabelrender %]")
+    (goto-char start)
+    (insert "[% '")))
+(global-set-key "\M-0" 'label-markup)
 
 ;; Modes
 (when (fboundp 'winner-mode)
@@ -110,6 +123,8 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map "\C-cc" 'org-capture)
+
+(add-hook 'text-mode-hook 'turn-on-orgtbl)
 
 ;; buffer window toggling
 (global-set-key "\C-x\C-b" 'bs-show)
