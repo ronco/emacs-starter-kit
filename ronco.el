@@ -75,19 +75,23 @@
 ;; lisp stuff
 
 ; function for label2fieldlabelrender
-(defun label-markup (start end)
+(defun label-markup (start end label)
   ""
-  (interactive "r")
+  (interactive "r\nsLabel: ")
   (save-excursion
     (goto-char end)
-    (insert "' | label2fieldlabelrender %]")
+    (insert (concat "' | " label " %]"))
     (goto-char start)
     (insert "[% '")))
 (global-set-key "\M-0" 'label-markup)
 
 ;; Modes
 (when (fboundp 'winner-mode)
-      (winner-mode 1))
+  (winner-mode 1))
+
+;; MAGIT
+(require 'magit)
+(require 'magit-svn)
 
 ;; GLOBAL BINDINGS
 
