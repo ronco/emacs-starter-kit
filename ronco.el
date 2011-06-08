@@ -87,14 +87,10 @@
 
 (fset 'triple-screen
    "\C-x1\C-x3\C-x3\C-x+")
-(global-set-key "\M-3"     'triple-screen)
 (fset 'twin-screen
    "\C-x1\C-x3\C-x+")
-(global-set-key "\M-2"     'twin-screen)
 (fset 'triple-u-screen
       "\C-x1\C-x2\C-x3\C-u15\C-x^")
-(global-set-key "\M-4"     'triple-u-screen)
-(global-set-key "\C-c/"     'comment-or-uncomment-region)
 
 ;; org
 (setq org-clock-idle-time 5)
