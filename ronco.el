@@ -52,7 +52,6 @@
 
 ;; TT stuff
 (require 'mumamo-fun)
-(setq auto-mode-alist (append '(("\\.tt$" . tt-html-mumamo)) auto-mode-alist))
 (defun ron-tt-html-mumamo-hook
   (local-set-key (kbd "M-TAB") 'nxml-complete)
   (local-set-key (kbd "C-ci") 'indent-region)
@@ -78,6 +77,9 @@
 ;; Modes
 (when (fboundp 'winner-mode)
   (winner-mode 1))
+
+(setq auto-mode-alist (append '(("\\.tt$" . tt-html-mumamo) ("\\.logconfig$" . conf-javaprop-mode)) auto-mode-alist))
+
 
 ;; MAGIT
 (require 'magit)
