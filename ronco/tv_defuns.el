@@ -14,6 +14,16 @@
   (tramp-shell "/ssh:dev02.int.trackvia.com#33322:/home/rwhite/trackvia" (or buffer-name "*dev02-shell*"))
   )
 
+(defun dev01-shell (&optional buffer-name)
+  "start or switch to a shell buffer on dev01"
+  (interactive
+   (list
+    (and current-prefix-arg
+         (read-buffer "Shell buffer: "
+                      (generate-new-buffer-name "*dev01-shell*"))))
+   )
+  (tramp-shell "/ssh:dev01.int.trackvia.com#33322:/home/rwhite/trackvia" (or buffer-name "*dev01-shell*"))
+  )
 
 (defun prod-shell (path buffer-name)
   "start a shell on an arbitrary production server"
