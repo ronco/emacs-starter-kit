@@ -13,11 +13,13 @@
 (defun 4x4-spaces ()
   "Setting to use spaces for tabs at a width of 4"
   (setq indent-tabs-mode nil)
-  (setq tab-width 4))
+  (setq tab-width 4)
+  (setq c-basic-offset 4))
 (defun 4x4-tabs ()
   "Setting to use tabs at a width of 4"
   (setq indent-tabs-mode t)
-  (setq tab-width 4))
+  (setq tab-width 4)
+  (setq c-basic-offset 4))
 
 ;; This is perl related stuff
 
@@ -47,18 +49,14 @@
   (define-key cperl-mode-map [f6] 'perltidy-region)
   )
 
-
-(add-hook 'cperl-mode-hook 'ron-perl-hook)
-
-;; TT stuff
-(require 'mumamo-fun)
-(defun ron-tt-html-mumamo-hook
-  (local-set-key (kbd "M-TAB") 'nxml-complete)
-  (local-set-key (kbd "C-ci") 'indent-region)
-  (local-set-key (kbd "C-cC-i") 'indent-buffer)
+(defun ron-php-hook ()
+  "My php settings"
+  (4x4-spaces)
   )
 
-(add-hook 'tt-html-mumamo-mode 'ron-tt-html-mumamo-hook)
+
+(add-hook 'cperl-mode-hook 'ron-perl-hook)
+(add-hook 'php-mode-hook 'ron-php-hook)
 
 ;; Obj-c stuff
 (defun ron-objc-hook ()
@@ -78,12 +76,20 @@
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 
-(setq auto-mode-alist (append '(("\\.tt$" . tt-html-mumamo) ("\\.logconfig$" . conf-javaprop-mode)) auto-mode-alist))
+(load "nxhtml/autostart.el")
 
+(setq auto-mode-alist (append '(("\\.logconfig$" . conf-javaprop-mode) ("\\.php$" . php-mode) ("\\.tpl$" . smarty-html-mumamo)) auto-mode-alist))
+
+(setq warning-minimum-level :error)
 
 ;; MAGIT
+
 (require 'magit)
-(require 'magit-svn)
+
+;; Mercurial
+;; (require 'mercurial)
+;; (require 'ahg)
+(load-file "/usr/local/share/emacs/site-lisp/dvc/dvc-load.el")
 
 ;; GLOBAL BINDINGS
 
@@ -123,3 +129,47 @@
 (global-set-key "\C-\M-j"  'bs-cycle-next)
 (global-set-key "\M-j"     'bs-cycle-previous)
 (global-set-key "\M-o"     'other-window)
+
+;; start emacs server
+(server-start)
+
+;; Remote shell commands
+(defun dev-shell (&optional buffer-name)
+  "start or switch to a shell buffer on dev02"
+  (interactive
+   (list
+    (and current-prefix-arg
+         (read-buffer "Shell buffer: "
+                      (generate-new-buffer-name "*dev02-shell*"))))
+   )
+  (tramp-shell "/ssh:rowhite@den3dev02.int.photobucket.com:/home/ldap/rowhite/pbcode/dev" (or buffer-name "*dev02-shell*"))
+  )
+
+(defun tramp-shell (tramp-path buffer-name)
+  "start or switch to a shell running in a tramp remote directory"
+  (let 
+      ( (default-directory tramp-path) )
+    (shell buffer-name )
+    )
+  )
+
+;;; db routine template
+;; (defun shared-db ()
+;; "start a mysql buffer for shared_dev db"
+;; (interactive)
+;; (setq buffer-name "*shared-db*")
+;; (if (comint-check-proc buffer-name)
+;;     (pop-to-buffer buffer-name)
+;;   (let (
+;;         (default-directory "/ssh:shell_server:/home/dir")
+;;         (sql-user "shared_devuser")
+;;         (sql-password "shared_devuser")
+;;         (sql-database "shared_dev_shard1")
+;;         (sql-server "db_server")
+;;         )
+;;     (sql-mysql)
+;;     (rename-buffer "*shared-db*")
+;;    )
+;;   )
+;; )
+
