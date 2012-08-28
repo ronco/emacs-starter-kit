@@ -5,11 +5,19 @@
 (if window-system
     (color-theme-blackboard))
 
+;; package repos
+;; (add-to-list 'package-archives '("org-odt-repo" . "http://repo.or.cz/w/org-mode/org-jambu.git/blob_plain/HEAD:/packages/"))
+
 ;; behavioral stuff
 
 (setq ns-pop-up-frames 'nil)
 
-;; tabs
+; code templates
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/snippets")
+
+;; tabs & spaces
 (defun 4x4-spaces ()
   "Setting to use spaces for tabs at a width of 4"
   (setq indent-tabs-mode nil)
@@ -20,6 +28,13 @@
   (setq indent-tabs-mode t)
   (setq tab-width 4)
   (setq c-basic-offset 4))
+
+(setq nxml-indent 4)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Ediff
+(setq ediff-diff-options "-w")
 
 ;; This is perl related stuff
 
@@ -51,12 +66,20 @@
 
 (defun ron-php-hook ()
   "My php settings"
+  (c-set-style "k&r")
   (4x4-spaces)
+  (c-set-offset 'comment-intro 0)
+  )
+
+(defun ron-js-hook ()
+  "My JS settings"
+  (whitespace-mode)
   )
 
 
 (add-hook 'cperl-mode-hook 'ron-perl-hook)
 (add-hook 'php-mode-hook 'ron-php-hook)
+(add-hook 'js-mode-hook 'ron-js-hook)
 
 ;; Obj-c stuff
 (defun ron-objc-hook ()
@@ -78,7 +101,14 @@
 
 (load "nxhtml/autostart.el")
 
-(setq auto-mode-alist (append '(("\\.logconfig$" . conf-javaprop-mode) ("\\.php$" . php-mode) ("\\.tpl$" . smarty-html-mumamo)) auto-mode-alist))
+(setq auto-mode-alist
+      (append
+       '(
+         ("\\.logconfig$" . conf-javaprop-mode)
+         ("\\.php$" . php-mode)
+         ("\\.tpl$" . smarty-html-mumamo)
+         ("\\.jstemplate$" . smarty-html-mumamo)
+         ) auto-mode-alist))
 
 (setq warning-minimum-level :error)
 
@@ -133,6 +163,52 @@
 ;; start emacs server
 (server-start)
 
+;; yasnippet support defuns
+(defun rcw/uc-first (string)
+  (concat
+   (upcase (substring string 0 1))
+   (substring string 1)
+   )
+  )
+
+(defun rcw/buff-ns-as-list ()
+  (interactive)
+  (let
+      (
+       (path (split-string (directory-file-name (file-name-directory (buffer-file-name))) "/"))
+       )
+    (rcw/remove-lib path)
+      )
+  )
+
+(defun rcw/buff-as-full-class ()
+  (mapconcat 'identity (rcw/buff-class-as-list) "_")
+  )
+
+(defun rcw/buff-class-as-list ()
+  (interactive)
+  (let
+      (
+       (path (split-string (file-name-sans-extension (buffer-file-name)) "/"))
+       )
+    (rcw/remove-lib path)
+    )
+  )
+
+(defun rcw/buff-ns-as-ns ()
+  (mapconcat 'identity (rcw/buff-ns-as-list) "\\")
+  )
+
+(defun rcw/remove-lib (directory-list)
+  (if directory-list
+      (if (equal (car directory-list) "lib")
+          (cdr directory-list)
+        (rcw/remove-lib (cdr directory-list))
+        )
+    '("")
+    )
+  )
+
 ;; Remote shell commands
 (defun dev-shell (&optional buffer-name)
   "start or switch to a shell buffer on dev02"
@@ -142,12 +218,12 @@
          (read-buffer "Shell buffer: "
                       (generate-new-buffer-name "*dev02-shell*"))))
    )
-  (tramp-shell "/ssh:rowhite@den3dev02.int.photobucket.com:/home/ldap/rowhite/pbcode/dev" (or buffer-name "*dev02-shell*"))
+  (tramp-shell "/ssh:rowhite@den3dev02:/home/ldap/rowhite/pbcode/dev" (or buffer-name "*dev02-shell*"))
   )
 
 (defun tramp-shell (tramp-path buffer-name)
   "start or switch to a shell running in a tramp remote directory"
-  (let 
+  (let
       ( (default-directory tramp-path) )
     (shell buffer-name )
     )

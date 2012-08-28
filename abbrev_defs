@@ -77,6 +77,8 @@
 
 (define-abbrev-table 'dvc-revlist-mode-abbrev-table '())
 
+(define-abbrev-table 'dvc-status-mode-abbrev-table '())
+
 (define-abbrev-table 'dvc-tips-mode-abbrev-table '())
 
 (define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
@@ -134,6 +136,8 @@
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
 
 (define-abbrev-table 'sgml-mode-abbrev-table '())
+
+(define-abbrev-table 'sh-mode-abbrev-table '())
 
 (define-abbrev-table 'shell-mode-abbrev-table '())
 
@@ -207,7 +211,7 @@
     ("regex_replace" "" smarty-template-regex-replace-hook 0)
     ("repeat" "" smarty-template-repeat-hook 0)
     ("replace" "" smarty-template-replace-hook 0)
-    ("section" "" smarty-template-section-hook 1)
+    ("section" "" smarty-template-section-hook 0)
     ("sectionelse" "" smarty-template-sectionelse-hook 0)
     ("spacify" "" smarty-template-spacify-hook 0)
     ("str_repeat" "" smarty-template-str-repeat-hook 0)
@@ -220,6 +224,8 @@
     ("validate" "" smarty-template-validate-hook 0)
     ("wordwrap" "" smarty-template-wordwrap-hook 0)
    ))
+
+(define-abbrev-table 'snippet-mode-abbrev-table '())
 
 (define-abbrev-table 'special-mode-abbrev-table '())
 
@@ -258,4 +264,10 @@
 (define-abbrev-table 'xhg-mq-mode-abbrev-table '())
 
 (define-abbrev-table 'xhg-qrefresh-edit-message-mode-abbrev-table '())
+
+(define-abbrev-table 'xmtn-conflicts-mode-abbrev-table '())
+
+(define-abbrev-table 'xmtn-log-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'yaml-mode-abbrev-table '())
 

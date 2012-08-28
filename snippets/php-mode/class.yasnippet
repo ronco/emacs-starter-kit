@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: class
+# key: class
+# expand-env:
+# --
+
+/*
+ * Copyright `(format-time-string "%Y")` Photobucket
+ */
+
+ ${1:namespace ${2:`(rcw/buff-ns-as-ns)`}};
+
+/**
+ * ${3:`(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))`}
+ *  ${4:description}
+ *
+ * @author Ron White <ron@photobucket.com>
+ */
+${9:abstract }class $3${5: extends ${6:parent}}${7: implements ${8:someInterface}} {
+
+    public function __construct(array $params = array()) {
+        $0
+    } // __construct()
+
+} // $3

@@ -1,0 +1,47 @@
+# -*- mode: snippet -*-
+# name: component
+# key: comp
+# expand-env:
+# --
+
+/**
+ * ${1:`(rcw/buff-as-full-class)`}
+ *
+ * ${2:details}
+ *
+ * @author Ron White <ron@photobucket.com>
+ */
+class $1 extends Pb_Component {
+
+    public function __construct($params = array()) {
+        parent::__construct($params);
+
+        $0
+    } // __construct()
+
+/**
+ * prepareComponents
+ *
+ * @return void
+ */
+    public function prepareComponents() {
+
+    } // prepareComponents()
+
+    public static function _resources() {
+        $resourceBlock = new \Core\Component\Resources();
+
+        /* $resourceBlock->addLessFile('', \Core\Component::PACKAGE_PAGE); */
+        /* $resourceBlock->addJavascriptFile('', \Core\Component::PACKAGE_PAGE); */
+
+        return $resourceBlock;
+    } // _resources()
+
+    public static function _requiredComponents() {
+        $components = array(
+        );
+
+        return $components;
+    } // _requiredComponents()
+
+} // $1

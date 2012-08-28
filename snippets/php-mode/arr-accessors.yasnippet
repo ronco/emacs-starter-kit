@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: arr-accessors
+# key: arracc
+# expand-env:
+# --
+
+/**
+ * Get ${1:varName}
+ * @return $2
+ */
+public function get${1:$(rcw/uc-first text)}()
+{
+    if (isset($this->data['$1'])) {
+    return $this->data['$1'];
+    }
+    return $3;
+}
+
+/**
+ * Set $1
+ * @param $2 $1
+ * @return `(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))`
+ */
+public function set${1:$(rcw/uc-first text)}($2 \$$1)
+{
+    $this->data['$1'] = \$$1;
+    return $this;
+}
+
+$0

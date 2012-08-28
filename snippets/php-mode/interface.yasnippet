@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: interface
+# key: interface
+# expand-env:
+# --
+
+/*
+ * Copyright `(format-time-string "%Y")` Photobucket
+ */
+
+${1:namespace ${2:`(rcw/buff-ns-as-ns)`}};
+
+/**
+ * ${3:`(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))`} - ${4:description}
+ *
+ * @author Ron White <ron@photobucket.com>
+ */
+interface $3 {
+$0
+} // $3
